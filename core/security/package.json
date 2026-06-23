@@ -12,5 +12,8 @@
   },
   "keywords": [],
   "author": "d3",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@app-core/validator": "file:../validator"
+  }
 }

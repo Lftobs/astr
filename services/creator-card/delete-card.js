@@ -17,9 +17,9 @@ async function deleteCard(serviceData) {
   let response;
 
   try {
-    const card = await CreatorCard.findOne({ query: { slug: data.slug } });
+    const card = await CreatorCard.findOne({ query: { slug: data.slug, deleted: null } });
 
-    if (!card || card.deleted) {
+    if (!card) {
       throwAppError(Messages.NOT_FOUND, ERROR_CODE.NF01);
     }
 
@@ -28,11 +28,11 @@ async function deleteCard(serviceData) {
     }
 
     await CreatorCard.updateOne({
-      query: { slug: data.slug },
+      query: { slug: data.slug, deleted: null },
       updateValues: { deleted: Date.now() },
     });
 
-    const updatedCard = await CreatorCard.findOne({ query: { slug: data.slug } });
+    const updatedCard = await CreatorCard.findOne({ query: { _id: card._id } });
     response = formatCard(updatedCard);
   } catch (error) {
     appLogger.errorX(error, 'delete-card-error');

@@ -17,13 +17,9 @@ async function getCard(serviceData) {
   let response;
 
   try {
-    const card = await CreatorCard.findOne({ query: { slug: data.slug } });
+    const card = await CreatorCard.findOne({ query: { slug: data.slug, deleted: null } });
 
     if (!card) {
-      throwAppError(Messages.NOT_FOUND, ERROR_CODE.NF01);
-    }
-
-    if (card.deleted) {
       throwAppError(Messages.NOT_FOUND, ERROR_CODE.NF01);
     }
 
