@@ -41,5 +41,13 @@
         "ignores": []
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js", "test/**/*.js"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }
