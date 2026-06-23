@@ -111,7 +111,9 @@ async function createCard(serviceData) {
       });
     }
 
-    const existingTitle = await CreatorCard.findOne({ query: { title: data.title } });
+    const existingTitle = await CreatorCard.findOne({
+      query: { title: data.title, deleted: null },
+    });
     if (existingTitle) {
       throwAppError('A card with this title already exists', ERROR_CODE.INVLDDATA);
     }
@@ -119,7 +121,7 @@ async function createCard(serviceData) {
     let { slug } = data;
     if (!slug) {
       slug = generateSlug(data.title);
-      const existing = await CreatorCard.findOne({ query: { slug } });
+      const existing = await CreatorCard.findOne({ query: { slug, deleted: null } });
       if (existing) {
         const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
         let suffix = '';
@@ -129,7 +131,7 @@ async function createCard(serviceData) {
         slug = `${slug}-${suffix}`;
       }
     } else {
-      const existing = await CreatorCard.findOne({ query: { slug } });
+      const existing = await CreatorCard.findOne({ query: { slug, deleted: null } });
       if (existing) {
         throwAppError(Messages.SLUG_TAKEN, ERROR_CODE.SL02);
       }
